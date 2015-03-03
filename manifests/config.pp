@@ -49,6 +49,15 @@ class couchbase::config (
     mode  => '0655',
   }
 
+  file { "cluster-server-list":
+        path    => "/usr/local/bin/couchbase-cluster-server-list",
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0700',
+        content => template('couchbase/couchbase-cluster-server-list.erb'),
+      }
+
+
 
   # Node_init (configure data directory location, etc - be careful to change it will destroy current data)
   if $ensure == present {
