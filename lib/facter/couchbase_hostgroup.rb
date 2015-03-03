@@ -1,20 +1,23 @@
 Facter.add(:couchbase_hostgroup) do
-  if File.exist? '/usr/local/bin/couchbase-cluster-server-list'
-    output = `/usr/local/bin/couchbase-cluster-server-list`
-    last_group = ''
-    server = Facter.value(:fqdn)
-    output.each_line do |line|
-      if /^\w+/.match(line)
-        last_group = line
+      setcode do
+        if File.exist? '/usr/local/bin/couchbase-cluster-server-list'
+          output = Facter::Core::Execution.exec('/usr/local/bin/couchbase-cluster-server-list | cat ')
+          server = Facter.value(:fqdn)
+          last_group = ''
+          hostgrp = ''
+          output.each_line do |line|
+            if /^\w+/.match(line)
+              last_group = line.strip
+            end
+            if /#{server}/.match(line)
+              hostgrp = last_group
+            end
+          end
+          hostgrp
+        end
       end
-      if /#{server}/.match(line)
-        group = last_group
-      end
-  end
-  setcode group
 end
 
-# If this server doesn't look like a server, it must be a desktop
 Facter.add(:couchbase_hostgroup) do
   setcode do
     ''
