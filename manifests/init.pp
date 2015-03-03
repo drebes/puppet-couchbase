@@ -57,6 +57,11 @@ class couchbase
   $autofailover   = $::couchbase::params::autofailover,
   $data_dir       = $::couchbase::params::data_dir,
 ) inherits ::couchbase::params {
+
+  if $::ec2_placement_availability_zone != '' {
+  notify{"availability zone: $::ec2_placement_availability_zone":
+  }
+} 
   
   # TODO: Add parameter data validation
 
