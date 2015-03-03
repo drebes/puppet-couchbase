@@ -59,7 +59,7 @@ class couchbase
 ) inherits ::couchbase::params {
 
   if $::ec2_placement_availability_zone != '' {
-  notify{"availability zone: $::ec2_placement_availability_zone, cluster_size: $cluster_size":
+  notify{"availability zone: $::ec2_placement_availability_zone, cluster_size: $cluster_size, " + hostgroup($user, $password, $fqdn):
   }
   hostgroup{"$::ec2_placement_availability_zone":
     user => $user,
