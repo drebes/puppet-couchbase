@@ -57,7 +57,7 @@ define couchbase::hostgroup (
 
     exec {"host_group-create-${host_groupname}":
       path      => ['/opt/couchbase/bin/', '/usr/bin/', '/bin', '/sbin', '/usr/sbin'],
-      command   => "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p '${password}' --list --group-name=${host_groupname}}",
+      command   => "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p '${password}' --list --group-name=${host_groupname}",
       unless    => "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p '${password}' --list --group-name=${host_groupname} | grep ^${host_groupname}",
       require   => Class['couchbase::config'],
       returns   => [0, 2],
