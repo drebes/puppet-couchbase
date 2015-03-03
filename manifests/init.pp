@@ -67,7 +67,7 @@ class couchbase
   }
   if $couchbase_hostgroup != $::ec2_placement_availability_zone {
     $hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 --move-servers=${::fqdn} --from-group=${couchbase_hostgroup} --to-group=${::ec2_placement_availability_zone}"
-  exec {"bucket-create-${bucketname}":
+    exec {"join-hostgroup}":
       path      => ['/opt/couchbase/bin/', '/usr/bin/', '/bin', '/sbin', '/usr/sbin'],
       command   => "${hostgrp_cmd}",
       require   => Class['couchbase::config'],
