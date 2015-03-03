@@ -65,6 +65,11 @@ class couchbase
     user => $user,
     password => $password,
   }
+  if $couchbase_hostgroup != $::ec2_placement_availability_zone {
+  notify{"switching from $couchbase_hostgroup to  $::ec2_placement_availability_zone":
+  }
+  }
+
 } 
   
   # TODO: Add parameter data validation
