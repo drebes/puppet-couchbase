@@ -1,7 +1,7 @@
 Facter.add(:cluster_size) do
       setcode do
         if File.exist? '/usr/local/bin/couchbase-cluster-server-list'
-          '/usr/local/bin/couchbase-cluster-server-list | wc --lines'
+          Facter::Core::Execution.exec('/usr/local/bin/couchbase-cluster-server-list | wc --lines')
         end
       end
     end
