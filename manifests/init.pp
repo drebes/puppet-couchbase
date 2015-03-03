@@ -66,7 +66,7 @@ class couchbase
     password => $password,
   }
   if $couchbase_hostgroup != $::ec2_placement_availability_zone {
-    hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 --move-servers=${::fqdn} --from-group=${couchbase_hostgroup} --to-group=${::ec2_placement_availability_zone}"
+    $hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 --move-servers=${::fqdn} --from-group=${couchbase_hostgroup} --to-group=${::ec2_placement_availability_zone}"
   notify{"$hostgrp_cmd":
   }
   #exec {"bucket-create-${bucketname}":
