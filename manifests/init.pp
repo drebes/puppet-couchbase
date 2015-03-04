@@ -51,7 +51,6 @@ class couchbase
   $edition        = $::couchbase::params::edition,
   $nodename       = $::fqdn,
   $server_group   = 'default',
-  $host_group     = undef,
   $install_method = 'curl',
   $ensure         = 'present',
   $autofailover   = $::couchbase::params::autofailover,
