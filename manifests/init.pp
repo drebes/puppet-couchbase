@@ -58,15 +58,15 @@ class couchbase
   $data_dir       = $::couchbase::params::data_dir,
 ) inherits ::couchbase::params {
 
-  if $::ec2_placement_availability_zone != '' {
-  notify{"availability zone: $::ec2_placement_availability_zone, couchbase_clustersize: $couchbase_clustersize":
-  }
-  hostgroup{"$::ec2_placement_availability_zone":
+  $host_group = $::ec2_placement_availability_zone
+
+  if $host_group != '' and $couchbase_clustersize > 1 {
+  hostgroup{"$host_group":
     user => $user,
     password => $password,
   }
-  if $couchbase_hostgroup != $::ec2_placement_availability_zone {
-    $hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p ${password} --move-servers=${::fqdn} --from-group=${couchbase_hostgroup} --to-group=${::ec2_placement_availability_zone}"
+  if $couchbase_hostgroup != $host_group {
+    $hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p ${password} --move-servers=${::fqdn} --from-group=${couchbase_hostgroup} --to-group=${host_group}"
     exec {"join-hostgroup}":
       path      => ['/opt/couchbase/bin/', '/usr/bin/', '/bin', '/sbin', '/usr/sbin'],
       command   => "${hostgrp_cmd}",
