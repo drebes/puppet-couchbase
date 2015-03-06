@@ -59,13 +59,13 @@ class couchbase
 
   $host_group = $::ec2_placement_availability_zone
 
-  if $host_group != '' and $couchbase_clustersize > 1 {
+  if "$host_group" != '' and $couchbase_clustersize > 1 {
   hostgroup{"$host_group":
     user => $user,
     password => $password,
   }
-  if $couchbase_hostgroup != $host_group {
-    $hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p ${password} --move-servers=${::fqdn} --from-group=${couchbase_hostgroup} --to-group=${host_group}"
+  if "$couchbase_hostgroup" != "$host_group" {
+    $hostgrp_cmd = "couchbase-cli group-manage -c 127.0.0.1 -u ${user} -p ${password} --move-servers=${::fqdn} --from-group=\"${couchbase_hostgroup}\" --to-group=\"${host_group}\""
     exec {"join-hostgroup}":
       path      => ['/opt/couchbase/bin/', '/usr/bin/', '/bin', '/sbin', '/usr/sbin'],
       command   => "${hostgrp_cmd}",
