@@ -69,7 +69,7 @@ class couchbase
     exec {"join-hostgroup}":
       path      => ['/opt/couchbase/bin/', '/usr/bin/', '/bin', '/sbin', '/usr/sbin'],
       command   => "${hostgrp_cmd}",
-      require   => Class['couchbase::config'],
+      require   => [ Class['couchbase::config'], Hostgroup["$host_group"] ],
       returns   => [0, 2],
       logoutput => true
     }
