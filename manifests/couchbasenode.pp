@@ -30,6 +30,7 @@ define couchbase::couchbasenode (
   $password     = 'password',
   $ensure       = $::couchbase::params::ensure,
   $autofailover = $::couchbase::params::autofailover,
+  $controller   = 'localhost',
 ) {
   include ::couchbase::params
 

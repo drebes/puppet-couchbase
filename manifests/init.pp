@@ -55,6 +55,7 @@ class couchbase
   $ensure         = 'present',
   $autofailover   = $::couchbase::params::autofailover,
   $data_dir       = $::couchbase::params::data_dir,
+  $controller     = 'localhost',
 ) inherits ::couchbase::params {
 
   $host_group = $::ec2_placement_availability_zone
@@ -91,6 +92,7 @@ class couchbase
     host_group   => $host_group,
     user         => $user,
     password     => $password,
+    controller   => $controller,
   }
 
   if $ensure == present {
